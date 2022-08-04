@@ -18,29 +18,17 @@ module.exports = {
     rules: [
       {
         test: /.css$/i,
+        exclude: /(node_modules|bower_components)/,
         use: [
           isEVNDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
-          {
-            // css兼容性处理
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [
-                  [
-                    "postcss-preset-env",
-                    {
-                      autoprefixer: {
-                        flexbox: "no-2009",
-                      },
-                      stage: 3,
-                    },
-                  ],
-                ],
-              },
-            },
-          },
+          "postcss-loader",
         ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: ["babel-loader"],
       },
     ],
   },
